@@ -9,7 +9,7 @@
 
         # clear vars from previous invocation
         unset dir_color rc_color user_id_color root_id_color init_vcs_color clean_vcs_color
-        unset modified_vcs_color added_vcs_color addmoded_vcs_color untracked_vcs_color op_vcs_color detached_vcs_color hex_vcs_color
+        unset modified_vcs_color added_vcs_color addmoded_vcs_color untracked_vcs_color op_vcs_color detached_vcs_color hex_vcs_color prompt_color
         unset rawhex_len
 
         # work around for conflict with vte.sh
@@ -42,12 +42,14 @@
         cols=`tput colors`                              # in emacs shell-mode tput colors returns -1
         if [[ -n "$cols" && $cols -ge 8 ]];  then       #  if terminal supports colors
                 dir_color=${dir_color:-CYAN}
+                prompt_color=${prompt_color:$dir_color}
                 rc_color=${rc_color:-red}
                 virtualenv_color=${virtualenv_color:-green}
                 user_id_color=${user_id_color:-blue}
                 root_id_color=${root_id_color:-magenta}
         else                                            #  only B/W
                 dir_color=${dir_color:-bw_bold}
+                prompt_color=${prompt_color:$dir_color}
                 rc_color=${rc_color:-bw_bold}
         fi
         unset cols
@@ -288,6 +290,7 @@ set_shell_label() {
         esac
 
         dir_color=${!dir_color}
+        prompt_color=${!prompt_color}
         rc_color=${!rc_color}
         virtualenv_color=${!virtualenv_color}
         user_id_color=${!user_id_color}
@@ -713,7 +716,7 @@ prompt_command_function() {
         # else eval cwd_cmd,  cwd should have path after exection
         eval "${cwd_cmd/\\/cwd=\\\\}"
 
-        PS1="$colors_reset$rc$head_local$color_who_where$dir_color$cwd$tail_local$dir_color$prompt_char $colors_reset"
+        PS1="$colors_reset$rc$head_local$color_who_where$dir_color$cwd$tail_local$dir_color$prompt_color$prompt_char $colors_reset"
 
         unset head_local tail_local pwd
  }
