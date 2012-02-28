@@ -621,7 +621,9 @@ parse_vcs_status() {
                 [[ ${untracked_files[0]} ]]  &&  file_list+=" "$untracked_vcs_color${untracked_files[@]}
         fi
         [[ ${vim_files}          ]]  &&  file_list+=" "${MAGENTA}vim:${vim_files}
-
+        
+        eval "max_file_list_length=${max_file_list_length_cmd:-$max_file_list_length}"
+        
         if [[ ${#file_list} -gt $max_file_list_length ]]  ;  then
                 file_list=${file_list:0:$max_file_list_length}
                 if [[ $max_file_list_length -gt 0 ]]  ;  then
