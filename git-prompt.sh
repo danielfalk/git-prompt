@@ -397,11 +397,11 @@ parse_hg_status() {
 
         eval `hg status 2>/dev/null |
                 sed -n '
-                        s/^M \([^.].*\)/modified=modified; modified_files[${#modified_files[@]}]=\"\1\";/p
-                        s/^A \([^.].*\)/added=added; added_files[${#added_files[@]}]=\"\1\";/p
-                        s/^R \([^.].*\)/added=added;/p
-                        s/^! \([^.].*\)/modified=modified;/p
-                        s/^? \([^.].*\)/untracked=untracked; untracked_files[${#untracked_files[@]}]=\\"\1\\";/p
+                        s/^M \(.*\)/modified=modified; modified_files[${#modified_files[@]}]=\"\1\";/p
+                        s/^A \(.*\)/added=added; added_files[${#added_files[@]}]=\"\1\";/p
+                        s/^R \(.*\)/added=added;/p
+                        s/^! \(.*\)/modified=modified;/p
+                        s/^? \(.*\)/untracked=untracked; untracked_files[${#untracked_files[@]}]=\\"\1\\";/p
         '`
 
         branch=`hg branch 2> /dev/null`
@@ -637,10 +637,10 @@ parse_vcs_status() {
         fi
 
 
-        head_local="$vcs_color(${vcs_info}$vcs_color${file_list}$vcs_color)"
+        head_local="\n$vcs_color(${vcs_info}$vcs_color${file_list}$vcs_color)\n"
 
         ### fringes
-        head_local="${head_local+$vcs_color$head_local }"
+        head_local="${head_local+$vcs_color$head_local}"
         #above_local="${head_local+$vcs_color$head_local\n}"
         #tail_local="${tail_local+$vcs_color $tail_local}${dir_color}"
  }
@@ -652,7 +652,7 @@ parse_virtualenv_status() {
 
     if [[ -n "$VIRTUAL_ENV" ]] ; then
 	virtualenv=`basename $VIRTUAL_ENV`
-	rc="$rc $virtualenv_color<$virtualenv> "
+	rc="$rc$virtualenv_color<$virtualenv> "
     fi
  }
 
