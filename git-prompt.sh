@@ -307,7 +307,7 @@ set_shell_label() {
             host=`hostname -s`
         fi
         host=${host#$default_host}
-        uphost=`echo ${host} | tr a-z A-Z`
+        uphost=`echo ${host} | tr a-z-. A-Z_`
         if [[ $upcase_hostname = "on" ]]; then
                 host=${uphost}
         fi
