@@ -704,7 +704,7 @@ prompt_command_function() {
         fi
 
         cwd=${PWD/$HOME/\~}                     # substitute  "~"
-        set_shell_label "${cwd##[/~]*/}/"       # default label - path last dir
+        set_shell_label "${cwd##[/~]*/}"       # default label - path last dir
 
 	parse_virtualenv_status
         parse_vcs_status
